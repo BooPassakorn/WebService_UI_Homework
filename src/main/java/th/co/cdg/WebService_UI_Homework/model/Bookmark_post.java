@@ -9,7 +9,7 @@ public class Bookmark_post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int bookmark_id;
+    private Long bookmark_id;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
@@ -19,11 +19,11 @@ public class Bookmark_post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public int getBookmark_id() {
+    public Long getBookmark_id() {
         return bookmark_id;
     }
 
-    public void setBookmark_id(int bookmark_id) {
+    public void setBookmark_id(Long bookmark_id) {
         this.bookmark_id = bookmark_id;
     }
 

@@ -9,7 +9,7 @@ public class Like_post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int like_id;
+    private Long like_id;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
@@ -19,11 +19,11 @@ public class Like_post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public int getLike_id() {
+    public Long getLike_id() {
         return like_id;
     }
 
-    public void setLike_id(int like_id) {
+    public void setLike_id(Long like_id) {
         this.like_id = like_id;
     }
 

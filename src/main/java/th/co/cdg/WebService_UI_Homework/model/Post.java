@@ -11,7 +11,7 @@ public class Post {
 
     @Id
     @GeneratedValue
-    private UUID post_id;
+    private Long post_id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date post_created_datetime;
@@ -31,11 +31,11 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bookmark_post> bookmark_posts;
 
-    public UUID getPost_id() {
+    public Long getPost_id() {
         return post_id;
     }
 
-    public void setPost_id(UUID post_id) {
+    public void setPost_id(Long post_id) {
         this.post_id = post_id;
     }
 
