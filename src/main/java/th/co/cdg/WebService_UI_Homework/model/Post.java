@@ -1,14 +1,28 @@
 package th.co.cdg.WebService_UI_Homework.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Entity
 public class Post {
+
+    @Id
+    @GeneratedValue
     private UUID post_id;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date post_created_datetime;
     private String post_caption;
+
+    @Lob
     private byte[] post_image;
-    private UUID user_id;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public UUID getPost_id() {
         return post_id;
@@ -42,11 +56,11 @@ public class Post {
         this.post_image = post_image;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

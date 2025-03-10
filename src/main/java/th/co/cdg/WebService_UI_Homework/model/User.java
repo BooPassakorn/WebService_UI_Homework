@@ -1,22 +1,44 @@
 package th.co.cdg.WebService_UI_Homework.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
     private UUID user_id;
+
     private String user_name;
     private String user_nickname;
+
+    @Lob
     private byte[] user_profile;
+
     private Boolean user_verified;
     private String user_bio;
-    private enum user_gender {male, female}
+
+    @Enumerated(EnumType.STRING)
+    private Gender user_gender;
+
+    @Temporal(TemporalType.DATE)
     private Date user_date_of_birth;
+
     private Long followers;
     private Long following;
     private Long post;
     private Boolean story;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Post> posts;
+
+    public enum Gender {
+        male, female
+    }
 
     public UUID getUser_id() {
         return user_id;
@@ -66,6 +88,14 @@ public class User {
         this.user_bio = user_bio;
     }
 
+    public Gender getUser_gender() {
+        return user_gender;
+    }
+
+    public void setUser_gender(Gender user_gender) {
+        this.user_gender = user_gender;
+    }
+
     public Date getUser_date_of_birth() {
         return user_date_of_birth;
     }
@@ -104,5 +134,13 @@ public class User {
 
     public void setStory(Boolean story) {
         this.story = story;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
