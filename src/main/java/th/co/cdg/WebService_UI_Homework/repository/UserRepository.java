@@ -48,4 +48,30 @@ public class UserRepository {
         return users;
     }
 
+    @Transactional(Transactional.TxType.REQUIRED)
+    public int insertNewUser(User user) {
+
+        String sql = " INSERT INTO USER " +
+                " VALUES(:user_id, :user_name, :user_nickname, :user_profile, " +
+                ":user_verified, :user_bio, :user_gender, :user_date_of_birth," +
+                " :followers, :following, :post, :story)";
+
+        Query query = entityManager.createNativeQuery(sql);
+
+        query.setParameter("user_id", user.getUser_id());
+        query.setParameter("user_name", user.getUser_name());
+        query.setParameter("user_nickname", user.getUser_nickname());
+        query.setParameter("user_profile", user.getUser_profile());
+        query.setParameter("user_verified", user.getUser_verified());
+        query.setParameter("user_bio", user.getUser_bio());
+        query.setParameter("user_gender", user.getUser_gender());
+        query.setParameter("user_date_of_birth", user.getUser_date_of_birth());
+        query.setParameter("followers", user.getFollowers());
+        query.setParameter("following", user.getFollowing());
+        query.setParameter("post", user.getPost());
+        query.setParameter("story", user.getStory());
+
+        return query.executeUpdate();
+    }
+
 }

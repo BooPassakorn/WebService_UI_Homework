@@ -8,6 +8,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/post")
 public class PostController {
 
-    @Autowired
-    PostController postController;
 }

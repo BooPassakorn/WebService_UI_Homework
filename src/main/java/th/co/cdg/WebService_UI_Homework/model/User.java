@@ -1,5 +1,6 @@
 package th.co.cdg.WebService_UI_Homework.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -46,7 +47,19 @@ public class User {
     private List<Languages> languages;
 
     public enum Gender {
-        male, female
+        MALE("male"),
+        FEMALE("female");
+
+        private final String value;
+
+        Gender(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
     }
 
     public Long getUser_id() {
