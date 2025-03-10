@@ -1,12 +1,23 @@
 package th.co.cdg.WebService_UI_Homework.model;
 
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
+@Entity
 public class Like_post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int like_id;
-    private UUID post_id;
-    private UUID user_id;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public int getLike_id() {
         return like_id;
@@ -16,19 +27,19 @@ public class Like_post {
         this.like_id = like_id;
     }
 
-    public UUID getPost_id() {
-        return post_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setPost_id(UUID post_id) {
-        this.post_id = post_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public Post getPost() {
+        return post;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

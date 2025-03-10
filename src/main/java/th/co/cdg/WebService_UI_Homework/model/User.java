@@ -36,6 +36,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Like_post> like_posts;
+
     public enum Gender {
         male, female
     }
@@ -142,5 +145,13 @@ public class User {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public List<Like_post> getLike_posts() {
+        return like_posts;
+    }
+
+    public void setLike_posts(List<Like_post> like_posts) {
+        this.like_posts = like_posts;
     }
 }

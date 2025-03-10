@@ -3,6 +3,7 @@ package th.co.cdg.WebService_UI_Homework.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +24,9 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Like_post> like_posts;
 
     public UUID getPost_id() {
         return post_id;
@@ -62,5 +66,13 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Like_post> getLike_posts() {
+        return like_posts;
+    }
+
+    public void setLike_posts(List<Like_post> like_posts) {
+        this.like_posts = like_posts;
     }
 }
