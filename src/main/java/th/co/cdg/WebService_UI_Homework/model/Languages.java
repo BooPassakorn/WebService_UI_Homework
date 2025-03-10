@@ -1,12 +1,21 @@
 package th.co.cdg.WebService_UI_Homework.model;
 
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
+@Entity
 public class Languages {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long language_id;
+
     private String language;
-    private UUID user_id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getLanguage_id() {
         return language_id;
@@ -24,11 +33,11 @@ public class Languages {
         this.language = language;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

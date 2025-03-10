@@ -42,6 +42,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bookmark_post> bookmark_posts;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Languages> languages;
+
     public enum Gender {
         male, female
     }
@@ -164,5 +167,13 @@ public class User {
 
     public void setBookmark_posts(List<Bookmark_post> bookmark_posts) {
         this.bookmark_posts = bookmark_posts;
+    }
+
+    public List<Languages> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<Languages> languages) {
+        this.languages = languages;
     }
 }
