@@ -39,6 +39,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Like_post> like_posts;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bookmark_post> bookmark_posts;
+
     public enum Gender {
         male, female
     }
@@ -153,5 +156,13 @@ public class User {
 
     public void setLike_posts(List<Like_post> like_posts) {
         this.like_posts = like_posts;
+    }
+
+    public List<Bookmark_post> getBookmark_posts() {
+        return bookmark_posts;
+    }
+
+    public void setBookmark_posts(List<Bookmark_post> bookmark_posts) {
+        this.bookmark_posts = bookmark_posts;
     }
 }

@@ -28,6 +28,9 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Like_post> like_posts;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bookmark_post> bookmark_posts;
+
     public UUID getPost_id() {
         return post_id;
     }

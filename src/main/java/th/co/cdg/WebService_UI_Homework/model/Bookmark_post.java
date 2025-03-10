@@ -1,12 +1,23 @@
 package th.co.cdg.WebService_UI_Homework.model;
 
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
+@Entity
 public class Bookmark_post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int bookmark_id;
-    private UUID post_id;
-    private UUID user_id;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public int getBookmark_id() {
         return bookmark_id;
@@ -16,19 +27,19 @@ public class Bookmark_post {
         this.bookmark_id = bookmark_id;
     }
 
-    public UUID getPost_id() {
-        return post_id;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPost_id(UUID post_id) {
-        this.post_id = post_id;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
