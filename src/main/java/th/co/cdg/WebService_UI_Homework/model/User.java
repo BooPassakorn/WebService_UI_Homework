@@ -22,13 +22,8 @@ public class User {
 
     private Boolean user_verified;
     private String user_bio;
-
-    @Enumerated(EnumType.STRING)
-    private Gender user_gender;
-
-    @Temporal(TemporalType.DATE)
+    private String user_gender;
     private Date user_date_of_birth;
-
     private Long followers;
     private Long following;
     private Long post;
@@ -45,22 +40,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Languages> languages;
-
-    public enum Gender {
-        MALE("male"),
-        FEMALE("female");
-
-        private final String value;
-
-        Gender(String value) {
-            this.value = value;
-        }
-
-        @JsonValue
-        public String getValue() {
-            return value;
-        }
-    }
 
     public Long getUser_id() {
         return user_id;
@@ -110,11 +89,11 @@ public class User {
         this.user_bio = user_bio;
     }
 
-    public Gender getUser_gender() {
+    public String getUser_gender() {
         return user_gender;
     }
 
-    public void setUser_gender(Gender user_gender) {
+    public void setUser_gender(String user_gender) {
         this.user_gender = user_gender;
     }
 

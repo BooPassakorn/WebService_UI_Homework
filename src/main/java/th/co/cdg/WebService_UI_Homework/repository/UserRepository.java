@@ -36,7 +36,7 @@ public class UserRepository {
             user.setUser_profile((byte[]) result[3]);
             user.setUser_verified((Boolean) result[4]);
             user.setUser_bio((String) result[5]);
-            user.setUser_gender(User.Gender.valueOf((String) result[6]));
+            user.setUser_gender(((String) result[6]));
             user.setUser_date_of_birth((Date) result[7]);
             user.setFollowers((Long) result[8]);
             user.setFollowing((Long) result[9]);
