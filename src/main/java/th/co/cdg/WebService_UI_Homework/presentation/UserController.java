@@ -75,4 +75,19 @@ public class UserController {
                     .body("Cannot update user");
         }
     }
+
+    @DeleteMapping(value = "delete-user/{id}")
+    public ResponseEntity<String> deleteUserByIdController (@PathVariable(name = "id") Long id) {
+        int result = userRepository.deleteUserById(id);
+
+        if (result != 0) {
+            return ResponseEntity
+                    .ok()
+                    .body("Delete user successfully");
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Cannot delete user");
+        }
+    }
 }

@@ -221,4 +221,17 @@ public class UserRepository {
 
         return query.executeUpdate();
     }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public int deleteUserById(Long id){
+
+        String sql = " DELETE FROM USER " +
+                " WHERE USER_ID = :id ";
+
+        Query query = entityManager.createNativeQuery(sql);
+
+        query.setParameter("id", id);
+
+        return query.executeUpdate();
+    }
 }
