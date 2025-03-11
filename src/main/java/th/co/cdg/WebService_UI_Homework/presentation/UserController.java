@@ -60,12 +60,9 @@ public class UserController {
                 .body(userRepository.getImageById(id));
     }
 
-    @PutMapping(value = "update-user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> updateUserByIdController (@RequestBody User user,
-                                                            @RequestParam(name = "image") MultipartFile image) throws IOException {
+    @PutMapping(value = "update-user")
+    public ResponseEntity<String> updateUserByIdController (@RequestBody User user) {
 
-        byte[] imageProfile = image.getBytes();
-        user.setUser_profile(imageProfile);
         int result = userRepository.updateUserById(user);
 
         if (result != 0) {
