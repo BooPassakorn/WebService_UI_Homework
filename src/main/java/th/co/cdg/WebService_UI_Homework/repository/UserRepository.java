@@ -1,10 +1,15 @@
 package th.co.cdg.WebService_UI_Homework.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import th.co.cdg.WebService_UI_Homework.model.User;
 
 import java.util.ArrayList;
@@ -38,9 +43,9 @@ public class UserRepository {
             user.setUser_bio((String) result[5]);
             user.setUser_gender(((String) result[6]));
             user.setUser_date_of_birth((Date) result[7]);
-            user.setFollowers((Long) result[8]);
-            user.setFollowing((Long) result[9]);
-            user.setPost((Long) result[10]);
+            user.setFollowers(Long.valueOf((String) result[8]));
+            user.setFollowing(Long.valueOf((String) result[9]));
+            user.setPost(Long.valueOf((String) result[10]));
             user.setStory((Boolean) result[11]);
             users.add(user);
         });
@@ -74,4 +79,20 @@ public class UserRepository {
         return query.executeUpdate();
     }
 
+    @Transactional(Transactional.TxType.SUPPORTS)
+    public byte[] getImageById(Long id){
+
+        String sql = " SELECT USER_PROFILE FROM USER " +
+                " WHERE USER_ID = :id ";
+
+        Query query = entityManager.createNativeQuery(sql);
+
+        query.setParameter("id", id);
+
+        try {
+            return (byte[]) query.getSingleResult();
+        } catch (NoResultException noResultException) {
+            return null;
+        }
+    }
 }

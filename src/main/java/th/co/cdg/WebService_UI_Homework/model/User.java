@@ -1,17 +1,13 @@
 package th.co.cdg.WebService_UI_Homework.model;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue
     private Long user_id;
 
     private String user_name;

@@ -51,4 +51,11 @@ public class UserController {
                     .body("Cannot add new user cause SQL problem.");
         }
     }
+
+    @GetMapping(value ="image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImageController(@PathVariable Long id) {
+        return ResponseEntity
+                .ok()
+                .body(userRepository.getImageById(id));
+    }
 }
