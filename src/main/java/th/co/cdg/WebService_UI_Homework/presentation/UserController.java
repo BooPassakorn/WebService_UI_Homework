@@ -2,6 +2,7 @@ package th.co.cdg.WebService_UI_Homework.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +58,24 @@ public class UserController {
         return ResponseEntity
                 .ok()
                 .body(userRepository.getImageById(id));
+    }
+
+    @PutMapping(value = "update-user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateUserByIdController (@RequestBody User user,
+                                                            @RequestParam(name = "image") MultipartFile image) throws IOException {
+
+        byte[] imageProfile = image.getBytes();
+        user.setUser_profile(imageProfile);
+        int result = userRepository.updateUserById(user);
+
+        if (result != 0) {
+            return ResponseEntity
+                    .ok()
+                    .body("Update user successfully");
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Cannot update user");
+        }
     }
 }

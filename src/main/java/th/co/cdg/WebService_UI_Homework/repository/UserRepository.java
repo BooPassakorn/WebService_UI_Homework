@@ -95,4 +95,130 @@ public class UserRepository {
             return null;
         }
     }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public int updateUserById(User user) {
+
+        String sql = " UPDATE USER SET " ;
+
+        if (null != user.getUser_name()) {
+            sql += " USER_NAME = :user_name " ;
+            if (null != user.getUser_nickname() || null != user.getUser_profile() || null != user.getUser_verified() || null != user.getUser_bio()
+            || null != user.getUser_gender() || null != user.getUser_date_of_birth() || null != user.getFollowers() || null != user.getFollowing()
+            || null != user.getPost() || null != user.getStory()){
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getUser_nickname()) {
+            sql += " USER_NICKNAME = :user_nickname ";
+            if (null != user.getUser_profile() || null != user.getUser_verified() || null != user.getUser_bio() || null != user.getUser_gender()
+                    || null != user.getUser_date_of_birth() || null != user.getFollowers() || null != user.getFollowing() || null != user.getPost() || null != user.getStory()){
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getUser_profile()) {
+            sql += " USER_PROFILE = :user_profile ";
+            if (null != user.getUser_verified() || null != user.getUser_bio() || null != user.getUser_gender() || null != user.getUser_date_of_birth()
+            || null != user.getFollowers() || null != user.getFollowing() || null != user.getPost() || null != user.getStory()) {
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getUser_bio()) {
+            sql += " USER_BIO = :user_bio ";
+            if (null != user.getUser_gender() || null != user.getUser_date_of_birth() || null != user.getFollowers() || null != user.getFollowing()
+            || null != user.getPost() || null != user.getStory()) {
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getUser_gender()) {
+            sql += " USER_GENDER = :user_gender ";
+            if (null != user.getUser_date_of_birth() || null != user.getFollowers() || null != user.getFollowing() || null != user.getPost() || null != user.getStory()) {
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getUser_date_of_birth()) {
+            sql += " USER_DATE_OF_BIRTH = :user_date_of_birth ";
+            if (null != user.getFollowers() || null != user.getFollowing() || null != user.getPost() || null != user.getStory()) {
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getFollowers()) {
+            sql += " FOLLOWERS = :followers ";
+            if (null != user.getFollowing() || null != user.getPost() || null != user.getStory()) {
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getFollowing()) {
+            sql += " FOLLOWING = :following ";
+            if (null != user.getPost() || null != user.getStory()) {
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getPost()) {
+            sql += " POST = :post ";
+            if (null != user.getStory()) {
+                sql += " , ";
+            }
+        }
+
+        if (null != user.getStory()) {
+            sql += " STOY = :story ";
+        }
+
+        sql += " WHERE USER_ID = :id ";
+
+        Query query = entityManager.createNativeQuery(sql);
+
+        query.setParameter("id", user.getUser_id());
+
+        if (null != user.getUser_name()) {
+            query.setParameter("user_name", user.getUser_name());
+        }
+
+        if (null != user.getUser_nickname()) {
+            query.setParameter("user_nickname", user.getUser_nickname());
+        }
+
+        if (null != user.getUser_profile()) {
+            query.setParameter("user_profile", user.getUser_profile());
+        }
+
+        if (null != user.getUser_bio()) {
+            query.setParameter("user_bio", user.getUser_bio());
+        }
+
+        if (null != user.getUser_gender()) {
+            query.setParameter("user_gender", user.getUser_gender());
+        }
+
+        if (null != user.getUser_date_of_birth()) {
+            query.setParameter("user_date_of_birth", user.getUser_date_of_birth());
+        }
+
+        if (null != user.getFollowers()) {
+            query.setParameter("followers", user.getFollowers());
+        }
+
+        if (null != user.getFollowing()) {
+            query.setParameter("following", user.getFollowing());
+        }
+
+        if (null != user.getPost()) {
+            query.setParameter("post", user.getPost());
+        }
+
+        if (null != user.getStory()) {
+            query.setParameter("story", user.getStory());
+        }
+
+        return query.executeUpdate();
+    }
 }
