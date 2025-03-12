@@ -5,16 +5,11 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import th.co.cdg.WebService_UI_Homework.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
 @Repository
 public class UserRepository {
@@ -40,7 +35,7 @@ public class UserRepository {
             user.setUser_name((String) result[1]);
             user.setUser_profile((byte[]) result[3]);
             user.setUser_verified((Boolean) result[4]);
-            user.setUser_bio((String) result[5]);
+            user.setUser_introduce((String) result[5]);
             user.setUser_gender(((String) result[6]));
             user.setUser_date_of_birth((Date) result[7]);
             user.setFollowers(Long.valueOf((String) result[8]));
@@ -67,7 +62,7 @@ public class UserRepository {
         query.setParameter("user_name", user.getUser_name());
         query.setParameter("user_profile", user.getUser_profile());
         query.setParameter("user_verified", user.getUser_verified());
-        query.setParameter("user_bio", user.getUser_bio());
+        query.setParameter("user_bio", user.getUser_introduce());
         query.setParameter("user_gender", user.getUser_gender());
         query.setParameter("user_date_of_birth", user.getUser_date_of_birth());
         query.setParameter("followers", user.getFollowers());
@@ -102,7 +97,7 @@ public class UserRepository {
 
         if (null != user.getUser_name()) {
             sql += " USER_NAME = :user_name " ;
-            if (null != user.getUser_profile() || null != user.getUser_verified() || null != user.getUser_bio()
+            if (null != user.getUser_profile() || null != user.getUser_verified() || null != user.getUser_introduce()
             || null != user.getUser_gender() || null != user.getUser_date_of_birth() || null != user.getFollowers() || null != user.getFollowing()
             || null != user.getPost() || null != user.getStory()){
                 sql += " , ";
@@ -111,13 +106,13 @@ public class UserRepository {
 
         if (null != user.getUser_profile()) {
             sql += " USER_PROFILE = :user_profile ";
-            if (null != user.getUser_verified() || null != user.getUser_bio() || null != user.getUser_gender() || null != user.getUser_date_of_birth()
+            if (null != user.getUser_verified() || null != user.getUser_introduce() || null != user.getUser_gender() || null != user.getUser_date_of_birth()
             || null != user.getFollowers() || null != user.getFollowing() || null != user.getPost() || null != user.getStory()) {
                 sql += " , ";
             }
         }
 
-        if (null != user.getUser_bio()) {
+        if (null != user.getUser_id()) {
             sql += " USER_BIO = :user_bio ";
             if (null != user.getUser_gender() || null != user.getUser_date_of_birth() || null != user.getFollowers() || null != user.getFollowing()
             || null != user.getPost() || null != user.getStory()) {
@@ -178,8 +173,8 @@ public class UserRepository {
             query.setParameter("user_profile", user.getUser_profile());
         }
 
-        if (null != user.getUser_bio()) {
-            query.setParameter("user_bio", user.getUser_bio());
+        if (null != user.getUser_introduce()) {
+            query.setParameter("user_introduce", user.getUser_introduce());
         }
 
         if (null != user.getUser_gender()) {

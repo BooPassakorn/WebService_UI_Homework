@@ -63,11 +63,11 @@ public class User {
         this.user_verified = user_verified;
     }
 
-    public String getUser_bio() {
+    public String getUser_introduce() {
         return user_introduce;
     }
 
-    public void setUser_bio(String user_introduce) {
+    public void setUser_introduce(String user_introduce) {
         this.user_introduce = user_introduce;
     }
 
