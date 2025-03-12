@@ -3,13 +3,16 @@ package th.co.cdg.WebService_UI_Homework.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.util.UUID;
+
 @Entity
-public class Languages {
+public class User_Languages {
 
     @Id
     private int language_id;
 
-    private String language;
+    @Id
+    private UUID uuid;
 
     public int getLanguage_id() {
         return language_id;
@@ -19,12 +22,11 @@ public class Languages {
         this.language_id = language_id;
     }
 
-    public String getLanguage() {
-        return language;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
-
 }

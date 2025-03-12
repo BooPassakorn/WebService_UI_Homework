@@ -3,39 +3,24 @@ package th.co.cdg.WebService_UI_Homework.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Post {
 
     @Id
-    @GeneratedValue
-    private Long post_id;
+    private int post_id;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date post_created_datetime;
     private String post_caption;
-
-    @Lob
     private byte[] post_image;
+    private Boolean post_recommend;
+    private Boolean post_trending;
 
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Like_post> like_posts;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Bookmark_post> bookmark_posts;
-
-    public Long getPost_id() {
+    public int getPost_id() {
         return post_id;
     }
 
-    public void setPost_id(Long post_id) {
+    public void setPost_id(int post_id) {
         this.post_id = post_id;
     }
 
@@ -61,21 +46,5 @@ public class Post {
 
     public void setPost_image(byte[] post_image) {
         this.post_image = post_image;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Like_post> getLike_posts() {
-        return like_posts;
-    }
-
-    public void setLike_posts(List<Like_post> like_posts) {
-        this.like_posts = like_posts;
     }
 }

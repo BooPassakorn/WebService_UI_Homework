@@ -14,6 +14,7 @@ import th.co.cdg.WebService_UI_Homework.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 @Repository
 public class UserRepository {
@@ -35,7 +36,7 @@ public class UserRepository {
 
         resultList.forEach(result -> {
             User user = new User();
-            user.setUser_id(((Integer) result[0]).longValue());
+            user.setUser_id(((String) result[0]));
             user.setUser_name((String) result[1]);
             user.setUser_nickname((String) result[2]);
             user.setUser_profile((byte[]) result[3]);
