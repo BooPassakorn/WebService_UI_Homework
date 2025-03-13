@@ -10,6 +10,7 @@ import th.co.cdg.WebService_UI_Homework.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 @Repository
 public class UserRepository {
@@ -50,19 +51,21 @@ public class UserRepository {
 
     @Transactional(Transactional.TxType.REQUIRED)
     public int insertNewUser(User user) {
+        entityManager.persist(user);
 
         String sql = " INSERT INTO USER " +
-                " VALUES(:user_id, :user_name, :user_profile, " +
-                ":user_verified, :user_bio, :user_gender, :user_date_of_birth," +
+                " VALUES(:uuid, :user_id, :user_name, :user_profile, " +
+                ":user_verified, :user_introduce, :user_gender, :user_date_of_birth," +
                 " :followers, :following, :post, :story)";
 
         Query query = entityManager.createNativeQuery(sql);
 
+        query.setParameter("uuid", UUID.randomUUID());
         query.setParameter("user_id", user.getUser_id());
         query.setParameter("user_name", user.getUser_name());
         query.setParameter("user_profile", user.getUser_profile());
         query.setParameter("user_verified", user.getUser_verified());
-        query.setParameter("user_bio", user.getUser_introduce());
+        query.setParameter("user_introduce", user.getUser_introduce());
         query.setParameter("user_gender", user.getUser_gender());
         query.setParameter("user_date_of_birth", user.getUser_date_of_birth());
         query.setParameter("followers", user.getFollowers());

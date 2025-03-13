@@ -8,6 +8,7 @@ import java.util.Date;
 public class Post {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int post_id;
 
     private Date post_created_datetime;
