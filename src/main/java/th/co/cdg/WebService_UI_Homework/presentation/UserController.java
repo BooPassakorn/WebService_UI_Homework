@@ -53,11 +53,11 @@ public class UserController {
         }
     }
 
-    @GetMapping(value ="image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getImageController(@PathVariable Long id) {
+    @GetMapping(value ="image/{user_id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImageController(@PathVariable String user_id) {
         return ResponseEntity
                 .ok()
-                .body(userRepository.getImageById(id));
+                .body(userRepository.getImageById(user_id));
     }
 
     @PutMapping(value = "update-user")

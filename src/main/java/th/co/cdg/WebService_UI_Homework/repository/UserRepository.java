@@ -77,14 +77,14 @@ public class UserRepository {
     }
 
     @Transactional(Transactional.TxType.SUPPORTS)
-    public byte[] getImageById(Long id){
+    public byte[] getImageById(String user_id){
 
         String sql = " SELECT USER_PROFILE FROM USER " +
-                " WHERE USER_ID = :id ";
+                " WHERE USER_ID = :user_id ";
 
         Query query = entityManager.createNativeQuery(sql);
 
-        query.setParameter("id", id);
+        query.setParameter("user_id", user_id);
 
         try {
             return (byte[]) query.getSingleResult();
