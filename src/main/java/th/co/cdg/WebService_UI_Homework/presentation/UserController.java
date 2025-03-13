@@ -7,11 +7,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import th.co.cdg.WebService_UI_Homework.DTO.UserStoryDTO;
 import th.co.cdg.WebService_UI_Homework.model.User;
 import th.co.cdg.WebService_UI_Homework.repository.UserRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/user")
@@ -90,4 +93,21 @@ public class UserController {
                     .body("Cannot delete user");
         }
     }
+
+    @GetMapping(value = "story-users/{uuid}")
+    public ResponseEntity<ArrayList<UserStoryDTO>> getAllStory (@PathVariable(name = "uuid") String uuid) {
+
+        int result = userRepository.queryStoryUser(uuid).size();
+
+        if (result != 0) {
+        return ResponseEntity
+                .ok()
+                .body(userRepository.queryStoryUser(uuid));
+        } else {
+            return ResponseEntity
+                    .noContent()
+                    .build();
+        }
+    }
+
 }
