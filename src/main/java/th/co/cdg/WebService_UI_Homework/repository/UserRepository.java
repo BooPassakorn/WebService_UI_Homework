@@ -5,10 +5,10 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
-import org.hibernate.annotations.processing.SQL;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import th.co.cdg.WebService_UI_Homework.DTO.UserDTO;
+import th.co.cdg.WebService_UI_Homework.DTO.UserLanguagesDTO;
+import th.co.cdg.WebService_UI_Homework.DTO.UserResponseDTO;
 import th.co.cdg.WebService_UI_Homework.DTO.UserStoryDTO;
 import th.co.cdg.WebService_UI_Homework.model.User;
 
@@ -22,64 +22,6 @@ public class UserRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Transactional(Transactional.TxType.SUPPORTS)
-    public ArrayList<User> queryAllUser() {
-
-        String sql = " SELECT * " +
-                " FROM USER ";
-
-        Query query = entityManager.createNativeQuery(sql);
-
-        ArrayList<Object[]> resultList = (ArrayList<Object[]>) query.getResultList();
-
-        ArrayList<User> users = new ArrayList<>();
-
-        resultList.forEach(result -> {
-            User user = new User();
-            user.setUser_id(((String) result[0]));
-            user.setUser_name((String) result[1]);
-            user.setUser_profile((byte[]) result[3]);
-            user.setUser_verified((Boolean) result[4]);
-            user.setUser_introduce((String) result[5]);
-            user.setUser_gender(((String) result[6]));
-            user.setUser_date_of_birth((Date) result[7]);
-            user.setFollowers(Long.valueOf((String) result[8]));
-            user.setFollowing(Long.valueOf((String) result[9]));
-            user.setPost(Long.valueOf((String) result[10]));
-            user.setStory((Boolean) result[11]);
-            users.add(user);
-        });
-
-        return users;
-    }
-
-    @Transactional(Transactional.TxType.REQUIRED)
-    public int insertNewUser(User user) {
-        entityManager.persist(user);
-
-        String sql = " INSERT INTO USER " +
-                " VALUES(:uuid, :user_id, :user_name, :user_profile, " +
-                ":user_verified, :user_introduce, :user_gender, :user_date_of_birth," +
-                " :followers, :following, :post, :story)";
-
-        Query query = entityManager.createNativeQuery(sql);
-
-        query.setParameter("uuid", UUID.randomUUID());
-        query.setParameter("user_id", user.getUser_id());
-        query.setParameter("user_name", user.getUser_name());
-        query.setParameter("user_profile", user.getUser_profile());
-        query.setParameter("user_verified", user.getUser_verified());
-        query.setParameter("user_introduce", user.getUser_introduce());
-        query.setParameter("user_gender", user.getUser_gender());
-        query.setParameter("user_date_of_birth", user.getUser_date_of_birth());
-        query.setParameter("followers", user.getFollowers());
-        query.setParameter("following", user.getFollowing());
-        query.setParameter("post", user.getPost());
-        query.setParameter("story", user.getStory());
-
-        return query.executeUpdate();
-    }
 
     @Transactional(Transactional.TxType.SUPPORTS)
     public byte[] getImageById(String user_id){
@@ -250,5 +192,62 @@ public class UserRepository {
 
         return userStoryDTOS;
     }
+
+    @Transactional(Transactional.TxType.SUPPORTS)
+    public UserResponseDTO queryAllUser(String uuid) {
+
+        String sql = "SELECT * FROM USER WHERE uuid = :uuid";
+
+        Query query = entityManager.createNativeQuery(sql);
+
+        query.setParameter("uuid", uuid);
+
+        List<Object[]> resultList = query.getResultList();
+
+        List<UserDTO> users = new ArrayList<>();
+
+        for (Object[] result : resultList) {
+            UserDTO user = new UserDTO();
+            user.setUuid(UUID.fromString((String) result[0]));
+            user.setUser_id((String) result[1]);
+            user.setUser_name((String) result[2]);
+            user.setUser_profile((byte[]) result[3]);
+            user.setUser_verified((Boolean) result[4]);
+            user.setUser_introduce((String) result[5]);
+            user.setUser_gender((String) result[6]);
+            user.setUser_date_of_birth((Date) result[7]);
+            user.setFollowers(Long.valueOf(result[8].toString()));
+            user.setFollowing(Long.valueOf(result[9].toString()));
+            user.setPost(Long.valueOf(result[10].toString()));
+            user.setStory((Boolean) result[11]);
+
+            users.add(user);
+        }
+
+        //ดึงข้อมูล languages ตาม uuid
+        String sqlLanguages = "SELECT language_id FROM USER_LANGUAGES WHERE uuid = :uuid";
+
+        Query queryLanguages = entityManager.createNativeQuery(sqlLanguages);
+
+        queryLanguages.setParameter("uuid", uuid);
+
+        List<Integer> languageIds = queryLanguages.getResultList();
+
+        List<UserLanguagesDTO> languages = new ArrayList<>();
+
+        for (Integer id : languageIds) {
+            UserLanguagesDTO lang = new UserLanguagesDTO();
+            lang.setLanguage_id(id);
+            languages.add(lang);
+        }
+
+        //รวมข้อมูลทั้งหมดลงใน DTO
+        UserResponseDTO response = new UserResponseDTO();
+        response.setUsers(users);
+        response.setLanguages(languages);
+
+        return response;
+    }
+
 
 }
