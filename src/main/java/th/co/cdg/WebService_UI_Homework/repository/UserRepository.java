@@ -249,5 +249,29 @@ public class UserRepository {
         return response;
     }
 
+    @Transactional(Transactional.TxType.REQUIRED)
+    public int updateUserGender(String uuid, String user_gender) {
 
+        String sql = "UPDATE USER SET USER_GENDER = :user_gender WHERE UUID = :uuid";
+
+        Query query = entityManager.createNativeQuery(sql);
+
+        query.setParameter("uuid", uuid);
+        query.setParameter("user_gender", user_gender);
+
+        return query.executeUpdate();
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public int updateUserDateOfBirth(String uuid, String user_date_of_birth) {
+
+        String sql = "UPDATE USER SET USER_DATE_OF_BIRTH = :user_date_of_birth WHERE UUID = :uuid";
+
+        Query query = entityManager.createNativeQuery(sql);
+
+        query.setParameter("uuid", uuid);
+        query.setParameter("user_date_of_birth", user_date_of_birth);
+
+        return query.executeUpdate();
+    }
 }

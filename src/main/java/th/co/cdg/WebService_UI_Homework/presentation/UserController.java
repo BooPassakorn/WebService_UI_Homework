@@ -10,6 +10,9 @@ import th.co.cdg.WebService_UI_Homework.model.User;
 import th.co.cdg.WebService_UI_Homework.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -85,6 +88,62 @@ public class UserController {
             return ResponseEntity
                     .ok()
                     .body(response);
+        }
+    }
+
+    @PutMapping(value = "update-gender")
+    public ResponseEntity<Object> updateUserGender(@RequestBody Map<String, String> requestBody) {
+
+        String uuid = requestBody.get("uuid");
+        String user_gender = requestBody.get("user_gender");
+
+        if (uuid == null || user_gender == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("UUID and gender are required");
+        }
+
+        int result = userRepository.updateUserGender(uuid, user_gender);
+
+        if (result != 0) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Gender updated successfully");
+
+            Map<String, String> updatedUserGender = new HashMap<>();
+            updatedUserGender.put("user_gender", user_gender);
+            response.put("updatedGender", updatedUserGender);
+
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body("Cannot update gender");
+        }
+    }
+
+    @PutMapping(value = "update-date-of-birth")
+    public ResponseEntity<Object> updateUserDateOfBirth(@RequestBody Map<String, String> requestBody) {
+
+        String uuid = requestBody.get("uuid");
+        String user_date_of_birth = requestBody.get("user_date_of_birth");
+
+        if (uuid == null || user_date_of_birth == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("UUID and Date are required");
+        }
+
+        int result = userRepository.updateUserDateOfBirth(uuid, user_date_of_birth);
+
+        if (result != 0) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Birth date updated successfully");
+
+            Map<String, String> updateUserDateOfBirth = new HashMap<>();
+            updateUserDateOfBirth.put("user_date_of_birth", user_date_of_birth);
+            response.put("updatedBirthOfDate", updateUserDateOfBirth);
+
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body("Cannot update gender");
         }
     }
 
