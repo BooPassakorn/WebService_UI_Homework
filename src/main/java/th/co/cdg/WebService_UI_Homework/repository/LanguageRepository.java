@@ -41,16 +41,13 @@ public class LanguageRepository {
     @Transactional(Transactional.TxType.REQUIRED)
     public List<String> updateUserLanguages(UUID uuid, List<Integer> languageIds) {
 
-        if (uuid == null || languageIds == null) {
-            throw new IllegalArgumentException("UUID or Language IDs cannot be null.");
-        }
-
         //ลบข้อมูลเก่า
         String sqlDelete = "DELETE FROM User_Languages WHERE uuid = :uuid";
 
         Query queryDelete = entityManager.createNativeQuery(sqlDelete);
 
-        queryDelete.setParameter("uuid", uuid);
+        queryDelete.setParameter("uuid", uuid.toString());
+
         queryDelete.executeUpdate();
 
         //เพิ่มข้อมูลใหม่
@@ -61,17 +58,12 @@ public class LanguageRepository {
             Query queryInsert = entityManager.createNativeQuery(sqlInsert);
 
             queryInsert.setParameter("languageId", languageId);
-            queryInsert.setParameter("uuid", uuid);
+            queryInsert.setParameter("uuid", uuid.toString());
             queryInsert.executeUpdate();
         }
 
-        //ตรวจสอบว่า languageIds มีค่าหรือไม่
-        if (languageIds.isEmpty()) {
-            return new ArrayList<>();
-        }
-
         //ดึงภาษาที่อัปเดต
-        String sql = "SELECT language FROM Languages WHERE language_id IN (:languageIds)";
+        String sql = "SELECT language FROM Languages WHERE language_id IN :languageIds";
 
         Query query = entityManager.createNativeQuery(sql);
 
@@ -81,4 +73,5 @@ public class LanguageRepository {
 
         return updatedLanguages;
     }
+
 }
