@@ -168,14 +168,39 @@ public class UserRepository {
     }
 
     @Transactional(Transactional.TxType.SUPPORTS)
-    public ArrayList<UserStoryDTO> queryStoryUser(String uuid){
+    public ArrayList<UserStoryDTO> queryStoryUserByuuid(String uuid){
 
         String sql = " SELECT uuid, user_name, user_profile, story FROM USER " +
                 " WHERE uuid = :uuid ";
 
+//        String sql = "SELECT uuid, user_name, user_profile, story FROM USER WHERE uuid = :uuid AND story = true";
+
         Query query = entityManager.createNativeQuery(sql);
 
         query.setParameter("uuid", uuid);
+
+        ArrayList<Object[]> resultList = (ArrayList<Object[]>) query.getResultList();
+
+        ArrayList<UserStoryDTO> userStoryDTOS = new ArrayList<>();
+
+        resultList.forEach(result -> {
+            UserStoryDTO user = new UserStoryDTO();
+            user.setUuid(UUID.fromString((String) result[0]));
+            user.setUser_name((String) result[1]);
+            user.setUser_profile((byte[]) result[2]);
+            user.setStory((Boolean) result[3]);
+            userStoryDTOS.add(user);
+        });
+
+        return userStoryDTOS;
+    }
+
+    @Transactional(Transactional.TxType.SUPPORTS)
+    public ArrayList<UserStoryDTO> queryStoryUser(){
+
+        String sql = " SELECT uuid, user_name, user_profile, story FROM USER ";
+
+        Query query = entityManager.createNativeQuery(sql);
 
         ArrayList<Object[]> resultList = (ArrayList<Object[]>) query.getResultList();
 

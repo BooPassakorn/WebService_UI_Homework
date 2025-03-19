@@ -60,19 +60,26 @@ public class UserController {
     }
 
     @GetMapping(value = "story-users/{uuid}")
-    public ResponseEntity<ArrayList<UserStoryDTO>> getAllStory (@PathVariable(name = "uuid") String uuid) {
+    public ResponseEntity<ArrayList<UserStoryDTO>> getAllStoryByuuid (@PathVariable(name = "uuid") String uuid) {
 
-        int result = userRepository.queryStoryUser(uuid).size();
+        int result = userRepository.queryStoryUserByuuid(uuid).size();
 
         if (result != 0) {
         return ResponseEntity
                 .ok()
-                .body(userRepository.queryStoryUser(uuid));
+                .body(userRepository.queryStoryUserByuuid(uuid));
         } else {
             return ResponseEntity
                     .noContent()
                     .build();
         }
+    }
+
+    @GetMapping(value = "get-all-story-users")
+    public ResponseEntity<ArrayList<UserStoryDTO>> getAllStory(){
+            return ResponseEntity
+                    .ok()
+                    .body(userRepository.queryStoryUser());
     }
 
     @GetMapping("all-user/{uuid}")
